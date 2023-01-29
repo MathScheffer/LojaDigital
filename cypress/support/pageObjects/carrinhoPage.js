@@ -51,6 +51,34 @@ export class CarrinhoPage{
         })
     }
 
+    adicionarCep = (cep) => {
+        cy.get('#calcularFrete').type(cep).should('have.value', cep)
+
+        cy.get('#btn-frete').click()
+    }
+
+    verificaValorFrete = (opcao, valorEsperado) => {
+
+        cy.get('[name=formaEnvio]').next().filter(`:contains("${opcao}")`).next()
+            .invoke('text').then($el => {
+                let valorFrete = $el
+
+                cy.log(valorFrete)
+    
+                expect(valorFrete).be.equal(valorEsperado)  
+            })
+    }
+
+    selecionarOpcaoFrete = (opcao) => {
+        cy.get('[name=formaEnvio]')
+            .next()
+            .filter(`:contains("${opcao}")`)
+            .prev()
+            .click()
+
+            cy.get('.valor-loading',{timeout: 10000}).should('not.exist');
+    }
+
     adicionarCupom = (cupom) => {
         cy.get('#usarCupom').type(cupom).should('have.value', cupom)
 
