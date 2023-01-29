@@ -1,6 +1,5 @@
 import { CarrinhoPage } from "../support/pageObjects/carrinhoPage"
 import { HomePage } from "../support/pageObjects/homePage"
-import Utils from "../support/Utils"
 
 describe('Aceite', () => {   
 
@@ -31,9 +30,9 @@ describe('Aceite', () => {
         carrinhoPage.retiraOfertaDoCarrinho('[CATEGORIA] Produto com categoria - 2 Nível')
 
         carrinhoPage.verificaContadorCarrinho(1)
-    })  
+    })
 
-    it('Seleciona ofertas e calcula o valor total',  () => {
+    it('Seleciona ofertas e calcula o valor total com as opcoes de fretes 1 dia útil e 2 dias úteis',  () => {
         const homePage = new HomePage();
         homePage.selecionarOferta('[CATEGORIA] Produto com categoria - 1 Nível')
         homePage.adicionarOfertaNoCarrinho()
@@ -51,9 +50,61 @@ describe('Aceite', () => {
         carrinhoPage.verificaValorOferta("[CATEGORIA] Produto com categoria - 2 Nível","R$ 17,50")
 
         carrinhoPage.verificarSubtotal(97.5)
-    }) 
 
-    it('Verifica se o cupom 10OFF descontou 10%', () => {
+        carrinhoPage.adicionarCep("94950-490")
+
+        carrinhoPage.verificaValorFrete('1 dia útil','R$ 0,00')
+        carrinhoPage.selecionarOpcaoFrete('1 dia útil')
+        carrinhoPage.verificaTotal(97.5)
+
+
+        carrinhoPage.verificaValorFrete('2 dias úteis','R$ 35,11')
+        carrinhoPage.selecionarOpcaoFrete('2 dias úteis')
+        carrinhoPage.verificaTotal(132.61)
+    })
+    it('Desconta o valor do frete da opcao "2 dias úteis" com cupom FRETEGRATIS', () => {
+      const homePage = new HomePage();
+      homePage.selecionarOferta('[CATEGORIA] Produto com categoria - 3 Nível')
+      homePage.adicionarOfertaNoCarrinho()
+
+      const carrinhoPage = new CarrinhoPage();
+      carrinhoPage.verificaValorOferta('[CATEGORIA] Produto com categoria - 3 Nível', 'R$ 89,00')
+
+      carrinhoPage.adicionarCep("94950-490")
+      carrinhoPage.verificaValorFrete('2 dias úteis','R$ 35,11')
+      carrinhoPage.selecionarOpcaoFrete('2 dias úteis')
+
+      carrinhoPage.verificarSubtotal(89.0)
+
+      carrinhoPage.verificaTotal(124.11)
+
+      carrinhoPage.adicionarCupom('FRETEGRATIS')
+
+      carrinhoPage.verificaTotal(89.0)
+    }) 
+    it('Cupom FRETEGRATIS não deve alterar o valor do carrinho quando o frete for "1 dia útil"', () => {
+      const homePage = new HomePage();
+      homePage.selecionarOferta('[CATEGORIA] Produto com categoria - 3 Nível')
+      homePage.adicionarOfertaNoCarrinho()
+
+      const carrinhoPage = new CarrinhoPage();
+      carrinhoPage.verificaValorOferta('[CATEGORIA] Produto com categoria - 3 Nível', 'R$ 89,00')
+
+      carrinhoPage.verificarSubtotal(89.0)
+
+      carrinhoPage.adicionarCep("94950-490")
+      carrinhoPage.verificaValorFrete('1 dia útil','R$ 0,00')
+      carrinhoPage.selecionarOpcaoFrete('1 dia útil')
+
+      carrinhoPage.verificaTotal(89.0)
+
+      carrinhoPage.adicionarCupom('FRETEGRATIS')
+
+      carrinhoPage.verificaTotal(89.0)
+
+    })
+
+    it('Cupom 10OFF deve dar 10% de desconto na soma do valor das ofertas descontado do frete', () => {
         const homePage = new HomePage();
         homePage.selecionarOferta('[CATEGORIA] Produto com categoria - 3 Nível')
         homePage.adicionarOfertaNoCarrinho()
@@ -61,16 +112,19 @@ describe('Aceite', () => {
         const carrinhoPage = new CarrinhoPage();
         carrinhoPage.verificaValorOferta('[CATEGORIA] Produto com categoria - 3 Nível', 'R$ 89,00')
 
-        carrinhoPage.verificarSubtotal(89.0)
+        carrinhoPage.adicionarCep("94950-490")
+        carrinhoPage.verificaValorFrete('2 dias úteis','R$ 35,11')
+        carrinhoPage.selecionarOpcaoFrete('2 dias úteis')
 
-        carrinhoPage.verificaTotal(89.0)
+        carrinhoPage.verificarSubtotal(89.0)
+        carrinhoPage.verificaTotal(124.11)
 
         carrinhoPage.adicionarCupom('10OFF')
 
-        carrinhoPage.verificaTotal(80.1)
+        carrinhoPage.verificaTotal(115.21)
     })
-      
-    it('Verifica se o cupom 30REAIS descontou 30 reais', () => {
+  
+    it('Cupom 30REAIS deve dar 30 reais de desconto na soma do valor das ofertas descontado do frete', () => {
         const homePage = new HomePage();
         homePage.selecionarOferta('[CATEGORIA] Produto com categoria - 3 Nível')
         homePage.adicionarOfertaNoCarrinho()
@@ -78,16 +132,21 @@ describe('Aceite', () => {
         const carrinhoPage = new CarrinhoPage();
         carrinhoPage.verificaValorOferta('[CATEGORIA] Produto com categoria - 3 Nível', 'R$ 89,00')
 
-        carrinhoPage.verificarSubtotal(89.0)
+        carrinhoPage.adicionarCep("94950-490")
+        carrinhoPage.verificaValorFrete('2 dias úteis','R$ 35,11')
+        carrinhoPage.selecionarOpcaoFrete('2 dias úteis')
 
-        carrinhoPage.verificaTotal(89.0)
+        carrinhoPage.verificarSubtotal(89.0)
+        carrinhoPage.verificaTotal(124.11)
 
         carrinhoPage.adicionarCupom('30REAIS')
 
-        carrinhoPage.verificaTotal(59.0)
-    }) 
+        carrinhoPage.verificaTotal(94.11)
+    })
 
-    it('Verifica se o cupom 20LIMITADO deve retornar erro', () => {
+
+    it('Cupom “20LIMITADO” deve retornar erro “Cupom não encontrado“'
+      , () => {
         const homePage = new HomePage();
         homePage.selecionarOferta('[CATEGORIA] Produto com categoria - 3 Nível')
         homePage.adicionarOfertaNoCarrinho()
@@ -95,17 +154,20 @@ describe('Aceite', () => {
         const carrinhoPage = new CarrinhoPage();
         carrinhoPage.verificaValorOferta('[CATEGORIA] Produto com categoria - 3 Nível', 'R$ 89,00')
 
-        carrinhoPage.verificarSubtotal(89.0)
+        carrinhoPage.adicionarCep("94950-490")
+        carrinhoPage.verificaValorFrete('2 dias úteis','R$ 35,11')
+        carrinhoPage.selecionarOpcaoFrete('2 dias úteis')
 
-        carrinhoPage.verificaTotal(89.0)
+        carrinhoPage.verificarSubtotal(89.0)
+        carrinhoPage.verificaTotal(124.11)
 
         carrinhoPage.adicionarCupom('20LIMITADO')
 
         carrinhoPage.verificaErroAoAdicionarCupom("Cupom não encontrado.")
-        carrinhoPage.verificaTotal(89.0)
-    }) 
-
-    it('Verifica se o cupom AJJFLWBHH deve descontar 5%', () => {
+        carrinhoPage.verificaTotal(124.11)
+    })
+    
+    it('Cupom AJJFLWBHH deve dar 5% de desconto na soma do valor das ofertas somando com o frete', () => {
         const homePage = new HomePage();
         homePage.selecionarOferta('[CATEGORIA] Produto com categoria - 3 Nível')
         homePage.adicionarOfertaNoCarrinho()
@@ -113,15 +175,19 @@ describe('Aceite', () => {
         const carrinhoPage = new CarrinhoPage();
         carrinhoPage.verificaValorOferta('[CATEGORIA] Produto com categoria - 3 Nível', 'R$ 89,00')
 
-        carrinhoPage.verificarSubtotal(89.0)
+        carrinhoPage.adicionarCep("94950-490")
+        carrinhoPage.verificaValorFrete('2 dias úteis','R$ 35,11')
+        carrinhoPage.selecionarOpcaoFrete('2 dias úteis')
 
-        carrinhoPage.verificaTotal(89.0)
+        carrinhoPage.verificarSubtotal(89.0)
+        carrinhoPage.verificaTotal(124.11)
 
         carrinhoPage.adicionarCupom('AJJFLWBHH')
 
-        carrinhoPage.verificaTotal(84.55)
+        carrinhoPage.verificaTotal(117.90)
     })
-    it('Verifica se o cupom CUPOMVENCIDO deve lançar erro "O cupom não é válido."', () => {
+
+    it('Cupom “CUPOMVENCIDO” deve retornar erro "O cupom não é válido."', () => {
         const homePage = new HomePage();
         homePage.selecionarOferta('[CATEGORIA] Produto com categoria - 3 Nível')
         homePage.adicionarOfertaNoCarrinho()
@@ -129,18 +195,18 @@ describe('Aceite', () => {
         const carrinhoPage = new CarrinhoPage();
         carrinhoPage.verificaValorOferta('[CATEGORIA] Produto com categoria - 3 Nível', 'R$ 89,00')
 
-        carrinhoPage.verificarSubtotal(89.0)
+        carrinhoPage.adicionarCep("94950-490")
+        carrinhoPage.verificaValorFrete('2 dias úteis','R$ 35,11')
+        carrinhoPage.selecionarOpcaoFrete('2 dias úteis')
 
-        carrinhoPage.verificaTotal(89.0)
+        carrinhoPage.verificarSubtotal(89.0)
+        carrinhoPage.verificaTotal(124.11)
 
         carrinhoPage.adicionarCupom('CUPOMVENCIDO')
 
         carrinhoPage.verificaErroAoAdicionarCupom("O cupom não é válido.")
-
-        carrinhoPage.verificaTotal(89.0)
+        carrinhoPage.verificaTotal(124.11)
     })
-
-    
   }) 
 
 })
