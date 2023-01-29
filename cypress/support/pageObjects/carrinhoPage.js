@@ -56,4 +56,14 @@ export class CarrinhoPage{
 
         cy.get('#btn-cupom').click()
     }
+
+    verificaErroAoAdicionarCupom = (erro) => {
+        cy.get('.alert-danger').then($el => {
+            let text = $el.text()
+            text = text.replace("×","").trim()
+            cy.log(text)
+
+            expect(text).to.equal(erro)
+        })
+    }
 }
