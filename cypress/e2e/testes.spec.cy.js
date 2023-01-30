@@ -7,7 +7,7 @@ describe('Aceite', () => {
     beforeEach(() => {
       cy.visit('https://qastoredesafio.lojaintegrada.com.br/')
     }) 
- /*
+ 
     it('Seleciona e retira multiplas ofertas para verificar se o contador  mudou', () => {
         const homePage = new HomePage()
 
@@ -62,7 +62,7 @@ describe('Aceite', () => {
         carrinhoPage.verificaTotal(132.61)
     })
 
-    */
+    
     it('Seleciona e incrementa oferta para validar mudança no valor total do carrinho', () => {
       const homePage = new HomePage();
         homePage.selecionarOferta('[CATEGORIA] Produto com categoria - 1 Nível')
@@ -88,7 +88,7 @@ describe('Aceite', () => {
     })
 
 
-    /*
+    
     it('Desconta o valor do frete da opcao "2 dias úteis" com cupom FRETEGRATIS', () => {
       const homePage = new HomePage();
       homePage.selecionarOferta('[CATEGORIA] Produto com categoria - 3 Nível')
@@ -233,7 +233,7 @@ describe('Aceite', () => {
 
         carrinhoPage.verificaMensagemErro("O cupom não é válido.")
         carrinhoPage.verificaTotal(124.11)
-    })*/
+    })
   }) 
 
 })
