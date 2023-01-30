@@ -8,7 +8,7 @@ Para instalar o projeto, basta utilizar o comando `npm install` para instalar to
 ### Com a interface gráfica do cypress
         npm run cypress:open
 
-### Rodando com o mochawesome (headless mode):
+### Rodando com o mochawesome (headless mode) e gerando o relatório:
         npm run test
 
 
