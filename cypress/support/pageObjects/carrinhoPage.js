@@ -14,6 +14,7 @@ export class CarrinhoPage{
         .find('> .excluir')
         .click()
     }
+
     verificaValorOferta = (nomeOferta, valor) => {
         cy.get('div').find('a')
             .filter(':contains('+nomeOferta+')')
@@ -85,7 +86,7 @@ export class CarrinhoPage{
         cy.get('#btn-cupom').click()
     }
 
-    verificaErroAoAdicionarCupom = (erro) => {
+    verificaMensagemErro = (erro) => {
         cy.get('.alert-danger').then($el => {
             let text = $el.text()
             text = text.replace("×","").trim()
@@ -93,5 +94,25 @@ export class CarrinhoPage{
 
             expect(text).to.equal(erro)
         })
+    }
+
+    clicarIrAsCompras = () => {
+        cy.contains('Ir às compras').click()
+    }
+
+    verificaValorDoCupom = (valorEsperado) => {
+        cy.get('#cupom_desconto').invoke('text').then($el => {
+            let text = $el
+            expect(text.trim()).to.equal(valorEsperado)
+        })
+    }
+
+    decrementarOferta = (nomeOferta) => {
+        cy.get('div').find('a')
+        .filter(':contains('+nomeOferta+')')
+        .parents('td')
+        .nextAll()
+        .find('> form > .quantidade > .icon-minus')
+        .click()
     }
 }

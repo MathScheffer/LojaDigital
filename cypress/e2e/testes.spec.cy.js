@@ -3,7 +3,6 @@ import { HomePage } from "../support/pageObjects/homePage"
 
 describe('Aceite', () => {   
 
-
   context('Carrinho', () => {
     beforeEach(() => {
       cy.visit('https://qastoredesafio.lojaintegrada.com.br/')
@@ -104,7 +103,7 @@ describe('Aceite', () => {
 
     })
 
-    it('Cupom 10OFF deve dar 10% de desconto na soma do valor das ofertas descontado do frete', () => {
+    it('Cupom 10OFF deve descontar 10% na soma do valor das ofertas', () => {
         const homePage = new HomePage();
         homePage.selecionarOferta('[CATEGORIA] Produto com categoria - 3 Nível')
         homePage.adicionarOfertaNoCarrinho()
@@ -124,7 +123,7 @@ describe('Aceite', () => {
         carrinhoPage.verificaTotal(115.21)
     })
   
-    it('Cupom 30REAIS deve dar 30 reais de desconto na soma do valor das ofertas descontado do frete', () => {
+    it('Cupom 30REAIS deve descontar 30 reais no valor total do carrinho', () => {
         const homePage = new HomePage();
         homePage.selecionarOferta('[CATEGORIA] Produto com categoria - 3 Nível')
         homePage.adicionarOfertaNoCarrinho()
@@ -163,11 +162,11 @@ describe('Aceite', () => {
 
         carrinhoPage.adicionarCupom('20LIMITADO')
 
-        carrinhoPage.verificaErroAoAdicionarCupom("Cupom não encontrado.")
+        carrinhoPage.verificaMensagemErro("Cupom não encontrado.")
         carrinhoPage.verificaTotal(124.11)
     })
     
-    it('Cupom AJJFLWBHH deve dar 5% de desconto na soma do valor das ofertas somando com o frete', () => {
+    it('Cupom AJJFLWBHH deve descontar 5% no valor total do carrinho', () => {
         const homePage = new HomePage();
         homePage.selecionarOferta('[CATEGORIA] Produto com categoria - 3 Nível')
         homePage.adicionarOfertaNoCarrinho()
@@ -204,7 +203,7 @@ describe('Aceite', () => {
 
         carrinhoPage.adicionarCupom('CUPOMVENCIDO')
 
-        carrinhoPage.verificaErroAoAdicionarCupom("O cupom não é válido.")
+        carrinhoPage.verificaMensagemErro("O cupom não é válido.")
         carrinhoPage.verificaTotal(124.11)
     })
   }) 
