@@ -61,6 +61,34 @@ describe('Aceite', () => {
         carrinhoPage.selecionarOpcaoFrete('2 dias úteis')
         carrinhoPage.verificaTotal(132.61)
     })
+
+    
+    it('Seleciona e incrementa oferta para validar mudança no valor total do carrinho', () => {
+      const homePage = new HomePage();
+        homePage.selecionarOferta('[CATEGORIA] Produto com categoria - 1 Nível')
+        homePage.adicionarOfertaNoCarrinho()
+
+        const carrinhoPage = new CarrinhoPage();
+        carrinhoPage.verificaValorOferta("[CATEGORIA] Produto com categoria - 1 Nível", "R$ 80,00")
+
+        //volta para home
+        cy.get('.logo').click()
+        //selciona outra oferta
+        homePage.selecionarOferta('[CATEGORIA] Produto com categoria - 2 Nível')
+        homePage.adicionarOfertaNoCarrinho()
+
+        
+        carrinhoPage.verificaValorOferta("[CATEGORIA] Produto com categoria - 2 Nível","R$ 17,50")
+
+        carrinhoPage.verificaTotal(97.5)
+
+        carrinhoPage.incrementaOferta("[CATEGORIA] Produto com categoria - 2 Nível")
+
+        carrinhoPage.verificaTotal(115)
+    })
+
+
+    
     it('Desconta o valor do frete da opcao "2 dias úteis" com cupom FRETEGRATIS', () => {
       const homePage = new HomePage();
       homePage.selecionarOferta('[CATEGORIA] Produto com categoria - 3 Nível')

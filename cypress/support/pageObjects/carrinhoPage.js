@@ -115,4 +115,13 @@ export class CarrinhoPage{
         .find('> form > .quantidade > .icon-minus')
         .click()
     }
+
+    incrementaOferta = (nomeOferta) => {
+        cy.get('div').find('a')
+        .filter(':contains('+nomeOferta+')')
+        .parents('td')
+        .nextAll()
+        .find('> form > .quantidade > .icon-plus')
+        .click()
+    }
 }
