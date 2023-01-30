@@ -23,3 +23,26 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+
+import addContext from 'mochawesome/addContext';
+
+Cypress.Commands.add('addContext', (context) => {
+    cy.once('test:after:run', (test) => addContext({test}, context))
+});
+
+Cypress.Commands.add('printWithMessage', (message) => {
+    cy.screenshot(message);
+
+    let Imagem = Cypress.spec.name
+    let path = "\\cypress\\screenshots\\" + Imagem + "\\"  + message + '.png';
+
+    cy.once('test:after:run', (test) => addContext({test}, message))
+    cy.once('test:after:run', (test) => addContext({test}, path)) 
+})
+
+Cypress.on("test:after:run", (test, runnable) => {  
+	if (test.state === "failed") {    
+		const screenshot =`\\cypress\\screenshots\\${Cypress.spec.name}\\${runnable.parent.title} -- ${test.title} (failed) (attempt 2).png`;    
+		addContext({ test }, screenshot);  
+	}
+});

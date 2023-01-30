@@ -8,7 +8,7 @@ describe('Smoke', () => {
       cy.visit('https://qastoredesafio.lojaintegrada.com.br/')
     }) 
  
-    it('Seleciona e retira multiplas ofertas para verificar se o contador  mudou', () => {
+    it('Seleciona e retira múltiplas ofertas para verificar se o contador  mudou', () => {
         const homePage = new HomePage()
 
         homePage.selecionarOferta('[CATEGORIA] Produto com categoria - 1 Nível')
@@ -131,7 +131,7 @@ describe('Smoke', () => {
 
     })
 
-    it('Cupom 10OFF deve descontar 10% na soma do valor das ofertas', () => {
+    it('Cupom “10OFF” deve descontar 10%  na soma do valor das ofertas', () => {
         const homePage = new HomePage();
         homePage.selecionarOferta('[CATEGORIA] Produto com categoria - 3 Nível')
         homePage.adicionarOfertaNoCarrinho()
@@ -151,7 +151,7 @@ describe('Smoke', () => {
         carrinhoPage.verificaTotal(115.21)
     })
   
-    it('Cupom 30REAIS deve descontar 30 reais no valor total do carrinho', () => {
+    it('Cupom 30REAIS deve dar 30 reais de desconto no valor total do carrinho', () => {
         const homePage = new HomePage();
         homePage.selecionarOferta('[CATEGORIA] Produto com categoria - 3 Nível')
         homePage.adicionarOfertaNoCarrinho()
