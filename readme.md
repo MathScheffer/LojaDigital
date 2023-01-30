@@ -19,7 +19,7 @@ Para ver o relatório, basta abrir o arquivo localizado em `cypress/reports/moch
 ![Imagem de demonstracao do relatorio](assets/demo.png)
 
 ### Relatório + imagem
-Para que seja possível observar as imagens do relatório, é necessário que esteja com a ferramenta **live server** ou similar instalada e, no arquivo `cypress/reports/mochareports/report.html`, clicar com o botão direito do mouse e abrir com a ferramenta. Após abrir o relatório com a ferramenta, basta abrir os logs e observar as imagens
+Para que seja possível observar as imagens do relatório, é necessário que esteja com a ferramenta **live server** ou similar instalada e, no arquivo `cypress/reports/mochareports/report.html`, clicar com o botão direito do mouse e abrir com a ferramenta. Após abrir o relatório com a ferramenta, basta abrir os logs e observar as imagens.
 
 ## Evidências
 Como todo software está sujeito a intermitências, dê uma olhada no relatório `cypress/evidencias/mochareports/reports.html`: Esta é uma cópia do último "run" antes da entrega do projeto, para que você possa ver antes de rodar ou em caso de algum cenário não passar, as evidências estão salvas.
