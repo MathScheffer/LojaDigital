@@ -1,5 +1,6 @@
 ## Pré-requisitos para rodar o projeto:
 -   Node: 18.13.0
+-   npm -v 8.19.3
 
 ## Instalando o projeto
 Para instalar o projeto, basta utilizar o comando `npm install` para instalar todas as dependências.
