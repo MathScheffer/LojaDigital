@@ -1,3 +1,4 @@
+
 import { CarrinhoPage } from "../support/pageObjects/carrinhoPage"
 import { HomePage } from "../support/pageObjects/homePage"
 
@@ -6,15 +7,17 @@ describe('Negativos', () => {
 context('Comportamentos inesperados', () => {
     beforeEach(() => {
       cy.visit('https://qastoredesafio.lojaintegrada.com.br/')
+      
     }) 
- 
     it('Cupom para de valer quando excluo todas as ofertas do carrinho e adiciono novas sem retirar o cupom antes', () => {
+
         const homePage = new HomePage();
         homePage.selecionarOferta('[CATEGORIA] Produto com categoria - 3 Nível')
         homePage.adicionarOfertaNoCarrinho()
 
         const carrinhoPage = new CarrinhoPage();
         carrinhoPage.verificaValorOferta('[CATEGORIA] Produto com categoria - 3 Nível', 'R$ 89,00')
+
 
         carrinhoPage.adicionarCep("94950-490")
         carrinhoPage.verificaValorFrete('2 dias úteis','R$ 35,11')
@@ -28,6 +31,7 @@ context('Comportamentos inesperados', () => {
         carrinhoPage.verificaTotal(94.11)
 
         carrinhoPage.retiraOfertaDoCarrinho('[CATEGORIA] Produto com categoria - 3 Nível')
+        
         carrinhoPage.clicarIrAsCompras()
 
         homePage.selecionarOferta('[CATEGORIA] Produto com categoria - 3 Nível')
@@ -45,6 +49,7 @@ context('Comportamentos inesperados', () => {
 
         const carrinhoPage = new CarrinhoPage();
         carrinhoPage.verificaValorOferta('[CATEGORIA] Produto com categoria - 3 Nível', 'R$ 89,00')
+
         carrinhoPage.decrementarOferta('[CATEGORIA] Produto com categoria - 3 Nível')
         carrinhoPage.verificaMensagemErro("Erro ao atualizar item.")
     })

@@ -4,6 +4,8 @@ export class CarrinhoPage{
 
     verificaContadorCarrinho = (numeroEsperado) => {
         cy.get('.span4 > .carrinho > :nth-child(1) > .qtd-carrinho').should('have.text',numeroEsperado)
+
+        cy.addContext(`Contador do carrinho esta conforme o esperado  - [ ${numeroEsperado} ]`)
     }
 
     retiraOfertaDoCarrinho = (oferta) => {
@@ -13,6 +15,8 @@ export class CarrinhoPage{
         .nextAll()
         .find('> .excluir')
         .click()
+
+        cy.printWithMessage(`Oferta [ ${oferta} ] foi retirada do carrinho`)
     }
 
     verificaValorOferta = (nomeOferta, valor) => {
@@ -28,6 +32,8 @@ export class CarrinhoPage{
             cy.log(txt)
             console.log(txt)
             expect(txt).to.be.equal(valor)
+
+            cy.printWithMessage(`Valor da oferta ${nomeOferta} retornou conforme o esperado [ ${valor} ]`)
         })
     }
 
@@ -39,6 +45,8 @@ export class CarrinhoPage{
 
 
             expect(subtotal).to.equal(valorEsperado)
+
+            cy.addContext(`Valor do subtotal retornou conforme o esperado - [ ${valorEsperado} ]`)
         })
     }
 
@@ -49,6 +57,7 @@ export class CarrinhoPage{
             cy.log(total)
 
             expect(total).to.equal(valorEsperado)
+            cy.printWithMessage(`Valor do subtotal retornou conforme o esperado - [ ${valorEsperado} ]`)
         })
     }
 
@@ -56,6 +65,8 @@ export class CarrinhoPage{
         cy.get('#calcularFrete').type(cep).should('have.value', cep)
 
         cy.get('#btn-frete').click()
+
+        cy.addContext(`Adicionou cep [ ${cep} ]`)
     }
 
     verificaValorFrete = (opcao, valorEsperado) => {
@@ -67,6 +78,8 @@ export class CarrinhoPage{
                 cy.log(valorFrete)
     
                 expect(valorFrete).be.equal(valorEsperado)  
+
+                cy.addContext(`Valor da opcao [ ${opcao} ]  do frete  retornou conforme o esperado - [ ${valorEsperado} ]`)
             })
     }
 
@@ -78,12 +91,16 @@ export class CarrinhoPage{
             .click()
 
             cy.get('.valor-loading',{timeout: 10000}).should('not.exist');
+
+            cy.printWithMessage(`Selecionou a opcao [ ${opcao} ]`)
     }
 
     adicionarCupom = (cupom) => {
         cy.get('#usarCupom').type(cupom).should('have.value', cupom)
 
         cy.get('#btn-cupom').click()
+
+        cy.printWithMessage(`Ativou o cupom [ ${cupom} ]`)
     }
 
     verificaMensagemErro = (erro) => {
@@ -93,6 +110,8 @@ export class CarrinhoPage{
             cy.log(text)
 
             expect(text).to.equal(erro)
+
+            cy.printWithMessage(`Apareceu mensagem de erro - [ ${erro} ]`)
         })
     }
 
@@ -104,6 +123,8 @@ export class CarrinhoPage{
         cy.get('#cupom_desconto').invoke('text').then($el => {
             let text = $el
             expect(text.trim()).to.equal(valorEsperado)
+
+            cy.addContext(`Valor do cupom retornou como esperado - [ ${valorEsperado} ]`)
         })
     }
 
@@ -114,6 +135,8 @@ export class CarrinhoPage{
         .nextAll()
         .find('> form > .quantidade > .icon-minus')
         .click()
+
+        cy.printWithMessage(`Oferta [ ${nomeOferta} ] foi decrementada`)
     }
 
     incrementaOferta = (nomeOferta) => {
@@ -123,5 +146,7 @@ export class CarrinhoPage{
         .nextAll()
         .find('> form > .quantidade > .icon-plus')
         .click()
+
+        cy.printWithMessage(`Oferta [ ${nomeOferta} ] foi incrementada`)
     }
 }
