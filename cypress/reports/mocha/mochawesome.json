@@ -1,0 +1,145 @@
+{
+  "stats": {
+    "suites": 2,
+    "tests": 2,
+    "passes": 2,
+    "pending": 0,
+    "failures": 0,
+    "start": "2023-01-30T03:20:33.589Z",
+    "end": "2023-01-30T03:21:07.865Z",
+    "duration": 34276,
+    "testsRegistered": 2,
+    "passPercent": 100,
+    "pendingPercent": 0,
+    "other": 0,
+    "hasOther": false,
+    "skipped": 0,
+    "hasSkipped": false
+  },
+  "results": [
+    {
+      "uuid": "c567751f-6071-4628-b40a-8086f88c768b",
+      "title": "",
+      "fullFile": "cypress\\e2e\\negativos.spec.cy.js",
+      "file": "cypress\\e2e\\negativos.spec.cy.js",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "d1d42420-e83f-43ad-b3aa-f022c61ba035",
+          "title": "Negativos",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [],
+          "suites": [
+            {
+              "uuid": "74e570a7-df25-42c9-8c53-df15d61563ea",
+              "title": "Comportamentos inesperados",
+              "fullFile": "",
+              "file": "",
+              "beforeHooks": [],
+              "afterHooks": [],
+              "tests": [
+                {
+                  "title": "Cupom para de valer quando excluo todas as ofertas do carrinho e adiciono novas sem retirar o cupom antes",
+                  "fullTitle": "Negativos Comportamentos inesperados Cupom para de valer quando excluo todas as ofertas do carrinho e adiciono novas sem retirar o cupom antes",
+                  "timedOut": null,
+                  "duration": 20251,
+                  "state": "passed",
+                  "speed": "slow",
+                  "pass": true,
+                  "fail": false,
+                  "pending": false,
+                  "context": null,
+                  "code": "const homePage = new _homePage.HomePage();\nhomePage.selecionarOferta('[CATEGORIA] Produto com categoria - 3 Nível');\nhomePage.adicionarOfertaNoCarrinho();\nconst carrinhoPage = new _carrinhoPage.CarrinhoPage();\ncarrinhoPage.verificaValorOferta('[CATEGORIA] Produto com categoria - 3 Nível', 'R$ 89,00');\ncarrinhoPage.adicionarCep(\"94950-490\");\ncarrinhoPage.verificaValorFrete('2 dias úteis', 'R$ 35,11');\ncarrinhoPage.selecionarOpcaoFrete('2 dias úteis');\ncarrinhoPage.verificarSubtotal(89.0);\ncarrinhoPage.verificaTotal(124.11);\ncarrinhoPage.adicionarCupom('30REAIS');\ncarrinhoPage.verificaTotal(94.11);\ncarrinhoPage.retiraOfertaDoCarrinho('[CATEGORIA] Produto com categoria - 3 Nível');\ncarrinhoPage.clicarIrAsCompras();\nhomePage.selecionarOferta('[CATEGORIA] Produto com categoria - 3 Nível');\nhomePage.adicionarOfertaNoCarrinho();\ncarrinhoPage.verificaValorDoCupom(\"R$ 0,00\");\ncarrinhoPage.verificaTotal(124.11);",
+                  "err": {},
+                  "uuid": "d7b12849-a54d-432e-a4e1-d21e39ac7cb7",
+                  "parentUUID": "74e570a7-df25-42c9-8c53-df15d61563ea",
+                  "isHook": false,
+                  "skipped": false
+                },
+                {
+                  "title": "Mensagem de erro lançada após decrementar oferta com somente 1 unidade",
+                  "fullTitle": "Negativos Comportamentos inesperados Mensagem de erro lançada após decrementar oferta com somente 1 unidade",
+                  "timedOut": null,
+                  "duration": 10622,
+                  "state": "passed",
+                  "speed": "slow",
+                  "pass": true,
+                  "fail": false,
+                  "pending": false,
+                  "context": null,
+                  "code": "const homePage = new _homePage.HomePage();\nhomePage.selecionarOferta('[CATEGORIA] Produto com categoria - 3 Nível');\nhomePage.adicionarOfertaNoCarrinho();\nconst carrinhoPage = new _carrinhoPage.CarrinhoPage();\ncarrinhoPage.verificaValorOferta('[CATEGORIA] Produto com categoria - 3 Nível', 'R$ 89,00');\ncarrinhoPage.decrementarOferta('[CATEGORIA] Produto com categoria - 3 Nível');\ncarrinhoPage.verificaMensagemErro(\"Erro ao atualizar item.\");",
+                  "err": {},
+                  "uuid": "faaeb7eb-6547-4cdc-8b1f-7a7238cda789",
+                  "parentUUID": "74e570a7-df25-42c9-8c53-df15d61563ea",
+                  "isHook": false,
+                  "skipped": false
+                }
+              ],
+              "suites": [],
+              "passes": [
+                "d7b12849-a54d-432e-a4e1-d21e39ac7cb7",
+                "faaeb7eb-6547-4cdc-8b1f-7a7238cda789"
+              ],
+              "failures": [],
+              "pending": [],
+              "skipped": [],
+              "duration": 30873,
+              "root": false,
+              "rootEmpty": false,
+              "_timeout": 2000
+            }
+          ],
+          "passes": [],
+          "failures": [],
+          "pending": [],
+          "skipped": [],
+          "duration": 0,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 2000
+    }
+  ],
+  "meta": {
+    "mocha": {
+      "version": "7.0.1"
+    },
+    "mochawesome": {
+      "options": {
+        "quiet": false,
+        "reportFilename": "mochawesome",
+        "saveHtml": false,
+        "saveJson": true,
+        "consoleReporter": "spec",
+        "useInlineDiffs": false,
+        "code": true
+      },
+      "version": "7.1.3"
+    },
+    "marge": {
+      "options": {
+        "id": "default",
+        "reportDir": "cypress/reports/mocha",
+        "quite": true,
+        "overwrite": false,
+        "html": false,
+        "json": true
+      },
+      "version": "6.2.0"
+    }
+  }
+}

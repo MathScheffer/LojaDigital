@@ -1,7 +1,7 @@
 import { CarrinhoPage } from "../support/pageObjects/carrinhoPage"
 import { HomePage } from "../support/pageObjects/homePage"
 
-describe('Aceite', () => {   
+describe('Negativos', () => {   
 
 context('Comportamentos inesperados', () => {
     beforeEach(() => {
